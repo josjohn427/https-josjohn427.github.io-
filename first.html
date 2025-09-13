@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ente Front Page</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      color: #1e293b;
+    }
+    header {
+      background: #2563eb;
+      color: white;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+    nav a {
+      color: white;
+      margin-left: 15px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    nav a:hover { text-decoration: underline; }
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #2563eb, #1e40af);
+      color: white;
+    }
+    .hero h2 {
+      font-size: 36px;
+      margin-bottom: 15px;
+    }
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+    .hero button {
+      padding: 12px 22px;
+      background: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #2563eb;
+      cursor: pointer;
+    }
+    .section {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+    footer {
+      background: #1e293b;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    /* Feedback extras */
+    .btn {
+      background: #2563eb;
+      color: white;
+      padding: 6px 12px;
+      margin: 4px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .btn:hover { background: #1e40af; }
+
+    .rating-stars span {
+      font-size: 26px;
+      cursor: pointer;
+      margin: 0 3px;
+      color: #888;
+    }
+    .rating-stars .active { color: gold; }
+
+    #avgRating { margin-top: 8px; font-size: 18px; color: #f59e0b; }
+
+    #commentInput {
+      width: 100%;
+      border-radius: 6px;
+      padding: 6px;
+      margin-top: 6px;
+    }
+    .comment {
+      background: #f1f5f9;
+      padding: 6px 8px;
+      margin: 4px 0;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>EnteWebsite</h1>
+    <nav>
+      <a href="#about">Games</a>
+      <a href="#feedback">Feedback</a>
+    </nav>
+  </header>
+
+  <!-- Hero / Front Page -->
+  <section class="hero">
+    <h2>Welcome to My Website 👋</h2>
+    <p>This is my first website! Play the game below and enjoy it </p>
+    <p>-> Like And rate your favourite Game</p>
+    <p>-> If you like my Website Give Like and Rate</p>
+    <button onclick="alert('Ningal button click cheythu! 🚀')">Get Started</button>
+  </section>
+
+  <!-- Games Section -->
+  <section class="section" id="about">
+    <div class="card">
+      <h2>Games</h2>
+      <p><a href="ORANGE.html">Catch The Box</a></p>
+      <p><a href="fluppy.html">Fluppy Bird</a></p>
+      <p><a href="last.html">Jumber</a></p>
+    </div>
+  </section>
+
+  <!-- Feedback Section -->
+  <section class="section" id="feedback">
+    <div class="card">
+      <h2>Feedback</h2>
+      <div>
+        👍 Likes: <span id="likeCount">0</span>
+        <button class="btn" onclick="doLike()">Like</button>
+        👎 Dislikes: <span id="dislikeCount">0</span>
+        <button class="btn" onclick="doDislike()">Dislike</button>
+      </div>
+
+      <div style="margin-top:15px;">
+        ⭐ Rate this website:
+        <div class="rating-stars" id="ratingStars">
+          <span data-val="1">★</span>
+          <span data-val="2">★</span>
+          <span data-val="3">★</span>
+          <span data-val="4">★</span>
+          <span data-val="5">★</span>
+        </div>
+        <div id="avgRating">Average Rating: -</div>
+      </div>
+
+      <div style="margin-top:15px;">
+        <h3>💬 Comments</h3>
+        <textarea id="commentInput" rows="2"></textarea><br>
+        <button class="btn" onclick="addComment()">Post</button>
+        <div id="commentsList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 EnteWebsite | All Rights Reserved</p>
+  </footer>
+
+  <script>
+    // Like & Dislike
+    let likeCount = Number(localStorage.getItem('site_likeCount') || 0);
+    let dislikeCount = Number(localStorage.getItem('site_dislikeCount') || 0);
+    let hasLiked = localStorage.getItem('site_hasLiked') === 'true';
+    let hasDisliked = localStorage.getItem('site_hasDisliked') === 'true';
+    document.getElementById('likeCount').textContent = likeCount;
+    document.getElementById('dislikeCount').textContent = dislikeCount;
+
+    function doLike(){
+      if(!hasLiked){
+        likeCount++;
+        hasLiked = true;
+        localStorage.setItem('site_likeCount', likeCount);
+        localStorage.setItem('site_hasLiked', 'true');
+        document.getElementById('likeCount').textContent = likeCount;
+      } else { alert("You already liked!"); }
+    }
+    function doDislike(){
+      if(!hasDisliked){
+        dislikeCount++;
+        hasDisliked = true;
+        localStorage.setItem('site_dislikeCount', dislikeCount);
+        localStorage.setItem('site_hasDisliked', 'true');
+        document.getElementById('dislikeCount').textContent = dislikeCount;
+      } else { alert("You already disliked!"); }
+    }
+
+    // Rating
+    function setupRating(){
+      const stars = document.querySelectorAll('#ratingStars span');
+      let userRated = localStorage.getItem('site_userRated');
+      let total = Number(localStorage.getItem('site_totalStars') || 0);
+      let count = Number(localStorage.getItem('site_totalRatings') || 0);
+
+      if(userRated){
+        highlightStars(Number(userRated));
+      }
+      updateAverage();
+
+      stars.forEach(star=>{
+        star.addEventListener('click',()=>{
+          if(!userRated){
+            let val = Number(star.dataset.val);
+            localStorage.setItem('site_userRated', val);
+            total += val;
+            count += 1;
+            localStorage.setItem('site_totalStars', total);
+            localStorage.setItem('site_totalRatings', count);
+            highlightStars(val);
+            updateAverage();
+          } else {
+            alert("You already rated!");
+          }
+        });
+      });
+    }
+
+    function highlightStars(val){
+      document.querySelectorAll('#ratingStars span').forEach(s=>{
+        if(Number(s.dataset.val) <= val) s.classList.add('active');
+        else s.classList.remove('active');
+      });
+    }
+
+    function updateAverage(){
+      let total = Number(localStorage.getItem('site_totalStars') || 0);
+      let count = Number(localStorage.getItem('site_totalRatings') || 0);
+      let avgText = count > 0 ? (total / count).toFixed(1) + " / 5 (" + count + " ratings)" : "-";
+      document.getElementById('avgRating').textContent = "Average Rating: " + avgText;
+    }
+
+    setupRating();
+
+    // Comments
+    function loadComments(){
+      const list = document.getElementById('commentsList');
+      list.innerHTML = '';
+      let comments = JSON.parse(localStorage.getItem('site_comments') || '[]');
+      comments.forEach(c=>{
+        let div = document.createElement('div');
+        div.className = 'comment';
+        div.textContent = c;
+        list.appendChild(div);
+      });
+    }
+    function addComment(){
+      let input = document.getElementById('commentInput');
+      let txt = input.value.trim();
+      if(txt){
+        let comments = JSON.parse(localStorage.getItem('site_comments') || '[]');
+        comments.push(txt);
+        localStorage.setItem('site_comments', JSON.stringify(comments));
+        input.value = '';
+        loadComments();
+      }
+    }
+    loadComments();
+  </script>
+</body>
+</html>
